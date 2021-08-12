@@ -19,14 +19,24 @@ mongoose.connect("mongodb://localhost:27017/wikiDB", {
   useUnifiedTopology: true,
 });
 
+// Creating article schema
 const articleSchema = mongoose.Schema({
   title: String,
   content: String,
 });
 
+// Creating article model
 const Article = mongoose.model("Article", articleSchema);
 
-//TODO
+app.get("/articles", function (req, res) {
+  Article.find(function (err, foundArticles) {
+    if (!err) {
+      res.send(foundArticles);
+    } else {
+      res.send(err);
+    }
+  });
+});
 
 app.listen(3000, function () {
   console.log("Server started on port 3000");
