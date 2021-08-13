@@ -85,9 +85,15 @@ app
       { $set: req.body },
       function (err) {
         if (!err) res.send("Successfully updated article.");
-        else res.send(err);
+        else res.send("Article not found.");
       }
     );
+  })
+  .delete(function (req, res) {
+    Article.deleteOne({ title: req.params.articleTitle }, function (err) {
+      if (err) res.send("Article not found");
+      else res.send("Successfully deleted article.");
+    });
   });
 
 app.listen(3000, function () {
